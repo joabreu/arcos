@@ -1,0 +1,20 @@
+#
+# arcOS
+# Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
+
+ifneq ($(strip $(lib-y)),)
+	lib-target := $(dir)/lib.a
+endif
+
+PHONY := all
+all: $(lib-target)
+
+PHONY += $(lib-target)
+$(lib-target):
+	$(if $(wildcard $(strip $@)), \
+		@rm $@)
+	@echo 'LIB		$@'
+	$(AR) rcs $@ $(lib-y)
+
+.PHONY: $(PHONY)
+

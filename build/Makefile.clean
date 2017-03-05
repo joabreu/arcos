@@ -1,0 +1,35 @@
+#
+# arcOS
+# Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
+
+# Build options
+include $(srcdir)/.config
+
+# Include objects to clean
+-include $(dir)/Makefile
+
+# Clean directories
+subdir-y := $(patsubst %/, %, $(filter %/, $(obj-y) $(tool-y)))
+obj-y := $(patsubst %/, %, $(obj-y) $(extra-y)) 
+
+# Add real path
+objprefix := $(subst ./,,$(srcdir)/$(dir)/)
+obj-y := $(addprefix $(objprefix),$(obj-y)) 
+real-subdir-y := $(addprefix $(objprefix),$(subdir-y))
+obj-y := $(wildcard $(filter-out $(real-subdir-y),$(obj-y)) \
+	$(objprefix)built-in.o \
+	$(objprefix)tmp-built-in.o \
+	$(objprefix)lib.a)
+
+PHONY := __clean
+__clean: $(subdir-y) $(obj-y)
+ifneq ($(strip $(obj-y)),)
+	+@rm $(obj-y)
+endif
+
+PHONY += $(subdir-y)
+$(subdir-y):
+	@$(MAKE) -f $(srcdir)/build/Makefile.clean dir=$(dir)/$@
+
+.PHONY: $(PHONY)
+

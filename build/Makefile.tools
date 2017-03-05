@@ -1,0 +1,49 @@
+#
+# arcOS
+# Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
+
+# Include objects to compile
+-include $(dir)/Makefile
+
+# Build options
+include $(srcdir)/.config
+
+# Build directories
+all-obj-y := $(obj-y)
+subdir-y := $(patsubst %/,%,$(filter %/,$(obj-y)))
+subtool-y := $(tool-y)
+obj-y := $(patsubst %/,%,$(obj-y))
+obj-y := $(filter-out $(subdir-y),$(obj-y))
+
+# Add real path
+objprefix := $(subst ./,,$(dir)/)
+obj-y := $(addprefix $(objprefix),$(obj-y))
+real-subdir-y := $(addprefix $(objprefix),$(subdir-y))
+real-subdir-built-in-y := $(addsuffix /built-in.o,$(real-subdir-y))
+
+PHONY := all
+all: $(subtool-y) $(subdir-y) $(obj-y)
+	$(if $(strip $(obj-y)), \
+		$(HOSTLD) -r -o $(dir)/tmp-built-in.o $(obj-y))
+	$(if $(strip $(obj-y) $(subdir-y)), \
+		$(HOSTLD) -r -o $(dir)/built-in.o \
+			$(if $(strip $(subdir-y)), $(real-subdir-built-in-y)) \
+			$(if $(strip $(obj-y)), $(dir)/tmp-built-in.o))
+	$(if $(strip $(tool-out)), \
+		$(HOSTCC) $(HOSTCFLAGS) -o $(dir)/$(tool-out) $(dir)/built-in.o)
+
+PHONY += $(subtool-y)
+$(subtool-y):
+	$(MAKE) -f $(srcdir)/build/Makefile.tools dir=$(dir)/$@
+
+PHONY += $(subdir-y)
+$(subdir-y):
+	$(MAKE) -f $(srcdir)/build/Makefile.tools dir=$(dir)/$@
+
+# Build rules
+%.o:%.c
+	@echo 'HOSTCC		$<'
+	@$(HOSTCC) $(HOSTCFLAGS) -c -o $@ $<
+
+.PHONY: $(PHONY)
+

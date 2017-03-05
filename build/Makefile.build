@@ -1,0 +1,54 @@
+#
+# arcOS
+# Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
+
+# Build options
+include $(srcdir)/.config
+
+# Include objects to compile
+-include $(dir)/Makefile
+
+# Build lib
+include $(srcdir)/build/Makefile.lib
+
+# Build directories
+subdir-y := $(patsubst %/,%,$(filter %/,$(strip $(obj-y))))
+obj-y := $(patsubst %/,%,$(strip $(obj-y)))
+obj-y := $(filter-out $(subdir-y),$(obj-y))
+
+# Add real path
+objprefix := $(subst ./,,$(dir)/)
+obj-y := $(addprefix $(objprefix),$(obj-y))
+extra-y := $(addprefix $(objprefix),$(extra-y))
+real-subdir-y := $(addprefix $(objprefix),$(subdir-y))
+real-subdir-built-in-y := $(addsuffix /built-in.o,$(real-subdir-y))
+
+PHONY := all
+all: $(subdir-y) $(obj-y) $(extra-y)
+	$(if $(strip $(obj-y)), \
+		$(LD) -r -o $(dir)/tmp-built-in.o $(obj-y))
+	$(if $(strip $(obj-y) $(subdir-y)), \
+		$(LD) -r -o $(dir)/built-in.o \
+			$(if $(strip $(subdir-y)), $(real-subdir-built-in-y)) \
+			$(if $(strip $(obj-y)), $(dir)/tmp-built-in.o))
+
+PHONY += $(subdir-y)
+$(subdir-y):
+	$(MAKE) -f $(srcdir)/build/Makefile.build dir=$(dir)/$@
+
+# Build rules
+%.o:%.c
+	@echo 'CC		$<'
+	@$(CC) $(CFLAGS) -c -o $@ $<
+%.o:%.S
+	@echo 'S		$<'
+	@$(CC) $(CFLAGS) -D__ASSEMBLY__ -c -o $@ $<
+%.lds:%.lds.S
+	@echo 'LDS		$<'
+	@$(CC) $(CFLAGS) -D__ASSEMBLY__ -E -P -o $@ $<
+%.s:%.c
+	@echo 'PREPROCESS	$<'
+	@$(CC) $(CFLAGS) -E -o $@ $<
+
+.PHONY: $(PHONY)
+

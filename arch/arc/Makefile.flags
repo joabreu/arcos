@@ -1,0 +1,1 @@
+cflags-$(CONFIG_ARC_UNWIND) += -fasynchronous-unwind-tables
