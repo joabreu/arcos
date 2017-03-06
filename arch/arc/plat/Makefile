@@ -1,1 +1,1 @@
-obj-y += sim/
+obj-$(CONFIG_MACHINE_NSIM) += sim/
