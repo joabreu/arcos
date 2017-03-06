@@ -9,8 +9,8 @@ include $(srcdir)/.config
 -include $(dir)/Makefile
 
 # Clean directories
-subdir-y := $(patsubst %/, %, $(filter %/, $(obj-y) $(tool-y)))
-obj-y := $(patsubst %/, %, $(obj-y) $(extra-y)) 
+subdir-y := $(patsubst %/, %, $(filter %/, $(obj-y) $(tool-y) $(obj-)))
+obj-y := $(patsubst %/, %, $(obj-y) $(obj-) $(extra-y)) 
 
 # Add real path
 objprefix := $(subst ./,,$(srcdir)/$(dir)/)
