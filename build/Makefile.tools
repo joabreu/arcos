@@ -26,10 +26,12 @@ all: $(subtool-y) $(subdir-y) $(obj-y)
 	$(if $(strip $(obj-y)), \
 		$(HOSTLD) -r -o $(dir)/tmp-built-in.o $(obj-y))
 	$(if $(strip $(obj-y) $(subdir-y)), \
+		@echo '  LD	$(dir)/built-in.o' && \
 		$(HOSTLD) -r -o $(dir)/built-in.o \
 			$(if $(strip $(subdir-y)), $(real-subdir-built-in-y)) \
 			$(if $(strip $(obj-y)), $(dir)/tmp-built-in.o))
 	$(if $(strip $(tool-out)), \
+		@echo '  LD	$(dir)/$(tool-out)' && \
 		$(HOSTCC) $(HOSTCFLAGS) -o $(dir)/$(tool-out) $(dir)/built-in.o)
 
 PHONY += $(subtool-y)
@@ -42,7 +44,7 @@ $(subdir-y):
 
 # Build rules
 %.o:%.c
-	@echo 'HOSTCC		$<'
+	@echo '  CC	$<'
 	@$(HOSTCC) $(HOSTCFLAGS) -c -o $@ $<
 
 .PHONY: $(PHONY)
