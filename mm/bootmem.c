@@ -49,6 +49,37 @@ static void *bootmem_alloc_data(struct bootmem *binfo, size_t size)
 	}
 }
 
+static void *bootmem_alloc_flags(size_t size, int flags)
+{
+	unsigned long size_pfn = PFN_UP(size);
+	unsigned long i, idx;
+	void *tmp;
+
+again:
+	tmp = phys_to_virt(PFN_PHYS(bootmem.curr_pfn));
+
+	if ((bootmem.curr_pfn + size_pfn) >= bootmem.end_pfn)
+		PANIC("Bootmem memory got exausted\n");
+
+	for (i = 0; i < size_pfn; i++) {
+		idx = bootmem.curr_pfn + i - bootmem.start_pfn;
+
+		if (test_and_set_bit(idx, bootmem.map)) {
+			bootmem.curr_pfn += i + 1;
+			goto again;
+		}
+	}
+
+	bootmem.curr_pfn += size_pfn;
+
+	if (flags & BOOTMEM_FLAGS_ZERO)
+		memset(tmp, 0, size);
+
+	printk("bootmem: alloc=0x%x, size=%d, flags=0x%x, curr_pfn=%ld\n",
+			(unsigned int)tmp, size, flags, bootmem.curr_pfn);
+	return tmp;
+}
+
 static bool bootmem_mark_region(unsigned long start_pfn, unsigned long end_pfn,
 		bool reserve)
 {
@@ -87,32 +118,9 @@ void bootmem_mark_reserved_region(unsigned long start_pfn, unsigned long end_pfn
 		PANIC("bootmem: Tried to reserve already reserved region\n");
 }
 
-void *bootmem_alloc(size_t size)
+void *bootmem_zalloc(size_t size)
 {
-	unsigned long size_pfn = PFN_UP(size);
-	unsigned long i, idx;
-	void *tmp;
-
-again:
-	tmp = phys_to_virt(PFN_PHYS(bootmem.curr_pfn));
-
-	if ((bootmem.curr_pfn + size_pfn) >= bootmem.end_pfn)
-		PANIC("Bootmem memory got exausted\n");
-
-	for (i = 0; i < size_pfn; i++) {
-		idx = bootmem.curr_pfn + i - bootmem.start_pfn;
-
-		if (test_and_set_bit(idx, bootmem.map)) {
-			bootmem.curr_pfn += i + 1;
-			goto again;
-		}
-	}
-
-	bootmem.curr_pfn += size_pfn;
-
-	printk("bootmem: alloc=0x%x, size=%d, curr_pfn=%ld\n",
-			(unsigned int)tmp, size, bootmem.curr_pfn);
-	return tmp;
+	return bootmem_alloc_flags(size, BOOTMEM_FLAGS_ZERO);
 }
 
 int init_bootmem(unsigned long map_pfn, unsigned long start_pfn,

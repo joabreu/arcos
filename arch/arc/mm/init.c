@@ -28,11 +28,11 @@ void setup_arch_memory(void)
 	init_bootmem(mapstart, start_pfn, end_pfn);
 	bootmem_mark_reserved_region(start_pfn, mapstart - 1);
 
-	bootmem_alloc(0x100);
-	bootmem_alloc(0x123);
-	bootmem_alloc(0x320);
-	bootmem_alloc(0x400);
-	bootmem_alloc(0x600);
+	bootmem_zalloc(0x100);
+	bootmem_zalloc(0x123);
+	bootmem_zalloc(0x320);
+	bootmem_zalloc(0x400);
+	bootmem_zalloc(0x600);
 
 	printk("Memory @ %lx [%ldM]\n", __pa(PFN_PHYS(start_pfn)),
 			__pa(PFN_PHYS(end_pfn - start_pfn)) >> 20);

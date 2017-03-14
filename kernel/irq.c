@@ -42,11 +42,11 @@ struct irq_domain *irq_domain_add_linear(const char *name,
 {
 	struct irq_domain *domain;
 
-	domain = bootmem_alloc(sizeof(*domain));
+	domain = bootmem_zalloc(sizeof(*domain));
 	if (!domain)
 		return NULL;
 
-	domain->entries = bootmem_alloc(sizeof(*domain->entries) * hwirq_max);
+	domain->entries = bootmem_zalloc(sizeof(*domain->entries) * hwirq_max);
 	if (!domain->entries)
 		return NULL;
 

@@ -123,7 +123,7 @@ void of_init(void)
 	if (!dev_count)
 		return; /* Nothing to do here */
 
-	of_info.devs = bootmem_alloc(dev_count * sizeof(*of_info.devs));
+	of_info.devs = bootmem_zalloc(dev_count * sizeof(*of_info.devs));
 	if (!of_info.devs)
 		PANIC("Not enough memory to OF devices\n");
 
