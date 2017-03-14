@@ -1,1 +1,2 @@
 obj-$(CONFIG_MACHINE_NSIM) += sim/
+obj-$(CONFIG_MACHINE_AXS10X) += axs10x/
