@@ -81,5 +81,57 @@ static inline phys_addr_t virt_to_phys(volatile void *addr)
 }
 #endif
 
+#ifndef IOBASE
+#define IOBASE	((void *)0)
+#endif
+
+#ifndef inb
+#define inb inb
+static inline u8 inb(unsigned long addr)
+{
+	return readb(IOBASE + addr);
+}
+#endif
+
+#ifndef inw
+#define inw inw
+static inline u16 inw(unsigned long addr)
+{
+	return readw(IOBASE + addr);
+}
+#endif
+
+#ifndef inl
+#define inl inl
+static inline u32 inl(unsigned long addr)
+{
+	return readl(IOBASE + addr);
+}
+#endif
+
+#ifndef outb
+#define outb outb
+static inline void outb(u8 value, unsigned long addr)
+{
+	writeb(value, IOBASE + addr);
+}
+#endif
+
+#ifndef outw
+#define outw outw
+static inline void outw(u16 value, unsigned long addr)
+{
+	writew(value, IOBASE + addr);
+}
+#endif
+
+#ifndef outl
+#define outl outl
+static inline void outl(u32 value, unsigned long addr)
+{
+	writel(value, IOBASE + addr);
+}
+#endif
+
 #endif
 

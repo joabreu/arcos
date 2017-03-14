@@ -8,14 +8,32 @@
 
 #include <arcOS/types.h>
 
-struct earlycon_device {
+struct earlycon_device;
+
+struct uart_port {
+	/* I/O */
 	void *membase;
 	resource_size_t mapbase;
-	unsigned int baud;
-	unsigned int bits;
-	unsigned int parity;
-	unsigned int flow;
+	resource_size_t mapsize;
+	unsigned int regshift;
+#define UART_IOTYPE_MEM		0
+#define UART_IOTYPE_MEM16	1
+#define UART_IOTYPE_MEM32	2
+	unsigned char iotype;
+	/* Params */
+	unsigned int clk;
+	/* Callbacks */
 	void (*putchar)(struct earlycon_device *dev, const unsigned char c);
+};
+
+struct earlycon_device {
+	const char *name;
+	struct uart_port port;
+	char options[16];
+	unsigned int baud;
+	unsigned int parity;
+	unsigned int bits;
+	unsigned int flow;
 };
 
 struct earlycon_id {

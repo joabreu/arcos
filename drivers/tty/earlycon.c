@@ -5,6 +5,7 @@
 
 #include <arcOS/init.h>
 #include <arcOS/io.h>
+#include <arcOS/kernel.h>
 #include <arcOS/printk.h>
 #include <arcOS/serial.h>
 #include <arcOS/string.h>
@@ -12,56 +13,119 @@
 #include <arcOS/vsprintf.h>
 
 static struct earlycon_device early_console = {
-	.putchar = NULL,
+	.name = "earlycon",
 };
 
-static int earlycon_parse(char *args, struct earlycon_device *edev)
+static int earlycon_parse_mem(char *args, unsigned char *iotype,
+		resource_size_t *addr, char **options)
 {
-	edev->mapbase = simple_strtoull(args, NULL, 0);
-	if (!edev->mapbase)
+	if (strncmp(args, "mmio,", 5) == 0) {
+		*iotype = UART_IOTYPE_MEM;
+		args += 5;
+	} else if (strncmp(args, "mmio16,", 7) == 0) {
+		*iotype = UART_IOTYPE_MEM16;
+		args += 7;
+	} else if (strncmp(args, "mmio32,", 7) == 0) {
+		*iotype = UART_IOTYPE_MEM32;
+		args += 7;
+	} else if (strncmp(args, "0x", 2) == 0) {
+		*iotype = UART_IOTYPE_MEM;
+	} else {
 		return -EINVAL;
+	}
 
-	edev->membase = ioremap(edev->mapbase, 64);
-	if (!edev->membase)
-		return -ENOMEM;
-
+	*addr = simple_strtoul(args, NULL, 0);
 	args = strchr(args, ',');
 	if (args)
 		args++;
 
-	edev->baud = simple_strtoul(args, NULL, 10);
-	if (!edev->baud)
-		return -EINVAL;
+	*options = args;
+	return 0;
+}
 
-	while (*args >= '0' && *args <= '9')
-		args++;
-	if (*args)
-		edev->parity = *args++;
-	if (*args)
-		edev->bits = *args++ - '0';
-	if (*args)
-		edev->flow = *args;
+static void earlycon_parse_options(char *options, unsigned int *baud,
+		unsigned int *parity, unsigned int *bits,
+		unsigned int *flow)
+{
+	char *str = options;
+
+	*baud = simple_strtoul(str, NULL, 10);
+	while (*str >= '0' && *str <= '9')
+		str++;
+	if (*str)
+		*parity = *str++;
+	if (*str)
+		*bits = *str++ - '0';
+	if (*str)
+		*flow = *str;
+}
+
+static int earlycon_parse(struct earlycon_device *edev, char *args)
+{
+	struct uart_port *port = &edev->port;
+	int ret, len;
+
+	ret = earlycon_parse_mem(args, &port->iotype, &port->mapbase, &args);
+	if (ret)
+		return ret;
+
+	switch (port->iotype) {
+	case UART_IOTYPE_MEM:
+		port->regshift = 0;
+		break;
+	case UART_IOTYPE_MEM16:
+		port->regshift = 1;
+		break;
+	case UART_IOTYPE_MEM32:
+		port->regshift = 2;
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	port->membase = ioremap(port->mapbase, 64);
+	if (!port->membase)
+		return -ENOMEM;
+
+	if (args) {
+		earlycon_parse_options(args, &edev->baud, &edev->parity,
+				&edev->bits, &edev->flow);
+		len = min(strlen(args) + 1, sizeof(edev->options));
+		strlcpy(edev->options, args, len);
+	}
 
 	return 0;
 }
 
+static void *earlycon_map(resource_size_t paddr, size_t size)
+{
+	return ioremap(paddr, size);
+}
+
 static int earlycon_register(char *args, const struct earlycon_id *eid)
 {
+	struct uart_port *port = &early_console.port;
 	int ret;
 
-	if (earlycon_parse(args, &early_console))
-		return -EINVAL;
 	if (!eid->setup)
 		return -EINVAL;
+	if (args && earlycon_parse(&early_console, args))
+		return -EINVAL;
+
+	if (port->mapbase) {
+		port->membase = earlycon_map(port->mapbase, 64);
+		if (!port->membase)
+			return -ENOMEM;
+	}
 
 	ret = eid->setup(&early_console, args);
 	if (ret)
 		return ret;
-	if (!early_console.putchar)
+	if (!port->putchar)
 		return -ENODEV;
 
-	printk("\nearlycon: %s at 0x%x (options '%s')\n", eid->name,
-			(unsigned int)early_console.membase, args);
+	printk("\nearlycon: %s mapped at 0x%x (options '%s')\n", eid->name,
+			(unsigned int)port->membase, early_console.options);
 	return 0;
 }
 
@@ -95,8 +159,8 @@ KEARLYPARAM_DECLARE("earlycon", earlycon_setup);
 
 void write_earlycon(const unsigned char c)
 {
-	if (!early_console.putchar)
+	if (!early_console.port.putchar)
 		return;
-	early_console.putchar(&early_console, c);
+	early_console.port.putchar(&early_console, c);
 }
 
