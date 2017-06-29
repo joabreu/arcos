@@ -35,7 +35,7 @@ static __always_inline void arc_unwind_seed(struct task_struct *task,
 	uinfo->task = task;
 }
 
-static __noinline void arc_unwind_core(struct task_struct *task,
+static __always_inline void arc_unwind_core(struct task_struct *task,
 		void (*consumer_fn) (unsigned long address))
 {
 	struct unwind_info uinfo;
@@ -60,7 +60,7 @@ static void arc_print_symbol(unsigned long address)
 	print_ksymbol("\t%s\n", address);
 }
 
-__noinline void show_stacktrace(struct task_struct *task)
+void __noinline show_stacktrace(struct task_struct *task)
 {
 	printk("\nStack Trace:\n");
 	arc_unwind_core(task, arc_print_symbol);
