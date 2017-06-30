@@ -11,5 +11,4 @@ extern char __data_start[], __data_end[];
 extern char __bss_start[], __bss_end[];
 extern char __end[];
 
-#endif
-
+#endif /* __ASM_GENERIC_SECTIONS_H__ */
