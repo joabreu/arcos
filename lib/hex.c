@@ -5,4 +5,3 @@
 
 const char hex_chars[] = "0123456789abcdef";
 const char hex_chars_upper[] = "0123456789ABCDEF";
-

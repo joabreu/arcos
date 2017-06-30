@@ -90,4 +90,3 @@ unsigned long find_next_zero_bit(const unsigned long *addr,
 {
 	return __find_next_bit(addr, size, offset, ~0UL);
 }
-

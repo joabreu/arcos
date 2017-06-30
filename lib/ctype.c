@@ -32,4 +32,3 @@ const unsigned char __ctype[] = {
 	_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,_L,	/* 224-239 */
 	_L,_L,_L,_L,_L,_L,_L,_P,_L,_L,_L,_L,_L,_L,_L,_L		/* 240-255 */
 };
-
