@@ -25,10 +25,19 @@ extern struct task_struct init_task;
 	} while (0);
 #define PANIC(args...) \
 	do { \
-		printk("\n --- KERNEL PANIC ---\n"); \
+		printk("\n --- KERNEL PANIC: %s:%d ---\n", __FILE__, __LINE__); \
+		printk(" --- Description: "); \
 		printk(args); \
 		show_stacktrace(&init_task); \
 		machine_halt(); \
+	} while(1);
+#define PANIC_ON(__condition__, __args__...) \
+	do { \
+		if (!(__condition__)) { \
+			break; \
+		} else { \
+			PANIC(__args__); \
+		} \
 	} while(1);
 #define EARLY_ASSERT(r) \
 	do { \
