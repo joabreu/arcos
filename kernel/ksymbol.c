@@ -48,4 +48,3 @@ void print_ksymbol(const char *fmt, unsigned long address)
 
 	printk(fmt, buf);
 }
-

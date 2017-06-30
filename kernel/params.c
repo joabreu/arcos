@@ -80,4 +80,3 @@ int parse_args(char *args, int (*fn) (char *param, char *val))
 
 	return err;
 }
-

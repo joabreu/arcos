@@ -66,4 +66,3 @@ void start_kernel(void)
 		;
 	PANIC("Init task stack got corrupted!\n");
 }
-

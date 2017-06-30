@@ -122,4 +122,3 @@ int request_irq(unsigned int irq, int (*handler)(int irq, void *devid),
 			(unsigned int)entry);
 	return 0;
 }
-

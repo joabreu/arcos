@@ -8,4 +8,3 @@
 
 struct task_struct init_task = INIT_TASK(init_task);
 union task_union init_task_union;
-

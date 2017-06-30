@@ -20,4 +20,3 @@ bool is_task_corrupted(struct task_struct *task)
 		return true;
 	return *end != STACK_END_MAGIC;
 }
-

@@ -26,4 +26,3 @@ int printk(const char *fmt, ...)
 
 	return ret;
 }
-
