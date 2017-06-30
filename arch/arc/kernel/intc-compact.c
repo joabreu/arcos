@@ -4,6 +4,7 @@
  */
 
 #include <arcOS/bitops.h>
+#include <arcOS/bug.h>
 #include <arcOS/irq.h>
 #include <arcOS/of.h>
 #include <arcOS/types.h>
@@ -14,7 +15,7 @@ static void arc_intc_mask(struct irq_desc *desc)
 {
 	u32 val;
 
-	if (desc->hwirq > 31)
+	if (WARN_ON(desc->hwirq > 31))
 		return;
 
 	val = arc_read_aux_reg(ARC_AUX_IENABLE);
@@ -26,7 +27,7 @@ static void arc_intc_unmask(struct irq_desc *desc)
 {
 	u32 val;
 
-	if (desc->hwirq > 31)
+	if (WARN_ON(desc->hwirq > 31))
 		return;
 
 	val = arc_read_aux_reg(ARC_AUX_IENABLE);
