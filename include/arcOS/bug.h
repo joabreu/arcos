@@ -8,12 +8,21 @@
 
 #include <arcOS/printk.h>
 #include <arcOS/reboot.h>
+#include <arcOS/stddef.h>
 #include <arcOS/types.h>
 #include <asm/stacktrace.h>
 
 struct task_struct;
 extern struct task_struct init_task;
 
+#define __WARN(__condition__) \
+	do { \
+		char *__holder__ = (char *)__condition__; \
+		printk("\n --- WARNING: %s:%d ---\n", __FILE__, __LINE__); \
+		if (__holder__) \
+			printk(" --- condition='%s'\n", __holder__); \
+		show_stacktrace(&init_task); \
+	} while (0);
 #define PANIC(args...) \
 	do { \
 		printk("\n --- KERNEL PANIC ---\n"); \
@@ -31,5 +40,12 @@ extern struct task_struct init_task;
 		} \
 	} while(1);
 #define BUILD_BUG_ON_ZERO(e)	(sizeof(struct { int:-!!(e); }))
+#define WARN_ON(condition) ({ \
+	int __ret__ = !!(condition); \
+	if (__ret__) \
+		__WARN(#condition); \
+	__ret__; \
+})
+#define WARN()		__WARN(NULL)
 
 #endif /* __ARCOS_BUG_H__ */

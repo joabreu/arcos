@@ -62,6 +62,7 @@ static void arc_print_symbol(unsigned long address)
 
 void __noinline show_stacktrace(struct task_struct *task)
 {
-	printk("\nStack Trace:\n");
+	printk(" --- Stack Trace:\n");
 	arc_unwind_core(task, arc_print_symbol);
+	printk("\n");
 }
