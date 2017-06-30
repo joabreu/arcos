@@ -21,8 +21,6 @@ static int autoconf_handler(void *user, const char *section, const char *name,
 	struct autoconf *ac = user;
 	int ivalue = 0;
 
-	printf("autoconf: name='%s', value='%s'\n", name, value);
-
 	if (!strcmp(value, "y")) {
 		/* Y/N value */
 		ivalue = 1;
@@ -60,4 +58,3 @@ int main(int argc, char **argv)
 	fclose(ac.f);
 	return 0;
 }
-
