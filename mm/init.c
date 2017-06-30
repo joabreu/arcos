@@ -6,4 +6,3 @@
 #include <arcOS/mm.h>
 
 struct mm_info init_mm;
-

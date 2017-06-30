@@ -30,25 +30,6 @@ static unsigned long bootmap_bytes(unsigned long pages)
 	return ALIGN(pages, sizeof(long));
 }
 
-static void *bootmem_alloc_data(struct bootmem *binfo, size_t size)
-{
-	unsigned long min, max;
-	unsigned long free_idx;
-
-	if (!binfo || !binfo->map)
-		return NULL;
-
-	min = binfo->start_pfn;
-	max = binfo->end_pfn;
-
-	while(1) {
-		/* find free block */
-		free_idx = find_next_zero_bit(binfo->map, max, min);
-		if (free_idx >= max)
-			return NULL;
-	}
-}
-
 static void *bootmem_alloc_flags(size_t size, int flags)
 {
 	unsigned long size_pfn = PFN_UP(size);
@@ -139,6 +120,7 @@ int init_bootmem(unsigned long map_pfn, unsigned long start_pfn,
 	if (bootmem.curr_pfn >= end_pfn)
 		PANIC("Not enough bootmem memory\n");
 
+	/* Mark map page(s) as reserved */
 	bootmem_mark_reserved_region(map_pfn, bootmem.curr_pfn - 1);
 
 	printk("bootmem: start_pfn=%ld, end_pfn=%ld, mapaddr=0x%x (%ld)\n",
@@ -147,4 +129,3 @@ int init_bootmem(unsigned long map_pfn, unsigned long start_pfn,
 			map_pfn, bootmem.curr_pfn);
 	return 0;
 }
-
