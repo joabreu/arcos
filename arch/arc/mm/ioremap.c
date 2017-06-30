@@ -26,4 +26,3 @@ void *ioremap(phys_addr_t paddr, size_t size)
 		return (void *)(u32)paddr;
 	return NULL;
 }
-

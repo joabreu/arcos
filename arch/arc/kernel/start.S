@@ -2,6 +2,7 @@
  * arcOS
  * Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
  */
+
 #include <asm/arc-regs.h>
 #include <asm/task-info.h>
 
@@ -39,4 +40,3 @@ __arc_entry:
 
 	; halt
 	flag 1
-

@@ -60,4 +60,3 @@ SECTIONS
 
 	__end = .;
 }
-

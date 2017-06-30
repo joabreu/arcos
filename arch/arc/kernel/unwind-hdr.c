@@ -50,4 +50,3 @@ int arc_unwind(struct unwind_info *info)
 
 	return 0;
 }
-

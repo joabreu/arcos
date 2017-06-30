@@ -6,4 +6,3 @@
 #include <arcOS/stddef.h>
 
 /* TODO: Generate variable offsets here so that asm files can use them */
-

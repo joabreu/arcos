@@ -21,4 +21,3 @@ int arc_unwind(struct unwind_info *info)
 	STACK_FP(info) = STACK_SP(info);
 	return 0;
 }
-

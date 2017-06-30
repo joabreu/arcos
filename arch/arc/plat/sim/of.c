@@ -56,4 +56,3 @@ OFNODE_DEFINE(arc_timer) {
 	.pdata = NULL,
 	OFNODE_DEPS(arc_timer),
 };
-

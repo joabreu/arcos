@@ -17,11 +17,10 @@ void arc_do_irq(unsigned int hwirq, struct pt_regs *regs)
 
 void arc_panic_irq(unsigned int hwirq, struct pt_regs *regs)
 {
-	PANIC("\nUnexpected HWIRQ=0x%x", hwirq);
+	PANIC("Unexpected HWIRQ=0x%x\n", hwirq);
 }
 
 void arc_init_irq(void)
 {
 	arc_write_aux_reg(ARC_AUX_IRQ_LEV, 0x0);
 }
-

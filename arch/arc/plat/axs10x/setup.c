@@ -72,4 +72,3 @@ static void setup_early(const struct machine_desc *mdesc)
 }
 MACHDESC_DECLARE(AXS10X, "snps,axs103", setup_early);
 #endif /* IS_ENABLED(CONFIG_AXS103) */
-

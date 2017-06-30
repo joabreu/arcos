@@ -10,4 +10,3 @@ void machine_halt(void)
 {
 	ASM("flag 1\n");
 }
-

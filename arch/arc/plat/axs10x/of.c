@@ -32,4 +32,3 @@ OFNODE_DEFINE(arc_uart3) {
 	.pdata = NULL,
 	OFNODE_DEPS(arc_uart),
 };
-

@@ -18,4 +18,3 @@ char *arc_format_cacheinfo(int cpu_id, char *buf, int len)
 
 	return buf;
 }
-

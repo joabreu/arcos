@@ -59,4 +59,3 @@ static int arc_intc_init(const struct ofnode *node)
 	return 0;
 }
 OFDEVICE_DEFINE(arc_intc, "snps,arc700-intc", arc_intc_init);
-
