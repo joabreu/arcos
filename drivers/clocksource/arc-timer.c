@@ -3,6 +3,7 @@
  * Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
  */
 
+#include <arcOS/bug.h>
 #include <arcOS/irq.h>
 #include <arcOS/of.h>
 #include <arcOS/printk.h>
@@ -12,6 +13,7 @@
 static int arc_clockevent_irq_handler(int irq, void *devid)
 {
 	arc_write_aux_reg(ARC_TIMER0_CTRL, ARC_TIMER_CTRL_IE | ARC_TIMER_CTRL_NH);
+	show_stacktrace(&init_task);
 	return 0;
 }
 
@@ -31,10 +33,9 @@ static int arc_clockevent_setup(const struct ofnode *node)
 		return ret;
 	}
 
-	arc_write_aux_reg(ARC_TIMER0_LIMIT, 0x01000000);
+	arc_write_aux_reg(ARC_TIMER0_LIMIT, 0x00500000);
 	arc_write_aux_reg(ARC_TIMER0_CNT, 0);
 	arc_write_aux_reg(ARC_TIMER0_CTRL, ARC_TIMER_CTRL_IE | ARC_TIMER_CTRL_NH);
 	return 0;
 }
 OFDEVICE_DEFINE(arc_clksource, "snps,arc-timer", arc_clockevent_setup);
-
