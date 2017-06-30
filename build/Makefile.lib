@@ -13,8 +13,7 @@ PHONY += $(lib-target)
 $(lib-target):
 	$(if $(wildcard $(strip $@)), \
 		@rm $@)
-	@echo '  LIB	$@'
+	@echo '  LIB     $@'
 	$(AR) rcs $@ $(lib-y)
 
 .PHONY: $(PHONY)
-

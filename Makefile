@@ -133,29 +133,29 @@ $(build-dirs):
 
 PHONY += prelink
 prelink:
-	@echo '  LD	$(outtmp)'
+	@echo '  LD      $(outtmp)'
 	@$(LD) $(LDFLAGS) -o $(outtmp) $(strip $(all-y))
-	@echo '  MAP	$(outtmp)'
+	@echo '  MAP     $(outtmp)'
 	@$(NM) -n $(outtmp) > $(outmap)
 
 PHONY += dosyms
 dosyms:
-	@echo '  SYMS	$(outtmp)'
+	@echo '  SYMS    $(outtmp)'
 	$(ksyms-bin) $(ksyms-in) $(ksyms-out)
-	@echo '  CC	$(ksyms-out)'
+	@echo '  CC      $(ksyms-out)'
 	@$(CC) $(CFLAGS) -c -o $(ksyms-obj-out) $(ksyms-out)
-	@echo '  LD	$(outtmp-with-syms)'
+	@echo '  LD      $(outtmp-with-syms)'
 	@$(LD) $(LDFLAGS) -o $(outtmp-with-syms) $(strip $(all-y)) $(ksyms-obj-out)
-	@echo '  MAP	$(outtmp-with-syms)'
+	@echo '  MAP     $(outtmp-with-syms)'
 	@$(NM) -n $(outtmp-with-syms) > $(outmap)
-	@echo '  SYMS	$(outtmp-with-syms)'
+	@echo '  SYMS    $(outtmp-with-syms)'
 	@$(ksyms-bin) $(ksyms-in) $(ksyms-out)
-	@echo '  CC	$(ksyms-out)'
+	@echo '  CC      $(ksyms-out)'
 	@$(CC) $(CFLAGS) -c -o $(ksyms-obj-out) $(ksyms-out)
 
 PHONY += link
 link:
-	@echo '  LD	$(outfile)'
+	@echo '  LD      $(outfile)'
 	@$(LD) $(LDFLAGS) -o $(outfile) $(strip $(all-y)) $(ksyms-obj-out)
 
 PHONY += clean

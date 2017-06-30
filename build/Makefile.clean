@@ -32,4 +32,3 @@ $(subdir-y):
 	@$(MAKE) -f $(srcdir)/build/Makefile.clean dir=$(dir)/$@
 
 .PHONY: $(PHONY)
-

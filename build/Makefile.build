@@ -28,7 +28,7 @@ all: $(subdir-y) $(obj-y) $(extra-y)
 	$(if $(strip $(obj-y)), \
 		$(LD) -r -o $(dir)/tmp-built-in.o $(obj-y))
 	$(if $(strip $(obj-y) $(subdir-y)), \
-		@echo '  LD	$(dir)/built-in.o' && \
+		@echo '  LD      $(dir)/built-in.o' && \
 		$(LD) -r -o $(dir)/built-in.o \
 			$(if $(strip $(subdir-y)), $(real-subdir-built-in-y)) \
 			$(if $(strip $(obj-y)), $(dir)/tmp-built-in.o))
@@ -39,17 +39,16 @@ $(subdir-y):
 
 # Build rules
 %.o:%.c
-	@echo '  CC	$<'
+	@echo '  CC      $<'
 	@$(CC) $(CFLAGS) -c -o $@ $<
 %.o:%.S
-	@echo '  S	$<'
+	@echo '  S       $<'
 	@$(CC) $(CFLAGS) -D__ASSEMBLY__ -c -o $@ $<
 %.lds:%.lds.S
-	@echo '  LDS	$<'
+	@echo '  LDS     $<'
 	@$(CC) $(CFLAGS) -D__ASSEMBLY__ -E -P -o $@ $<
 %.s:%.c
-	@echo '  CC	$<'
+	@echo '  CC      $<'
 	@$(CC) $(CFLAGS) -E -o $@ $<
 
 .PHONY: $(PHONY)
-
