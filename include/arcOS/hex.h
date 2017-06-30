@@ -9,5 +9,4 @@
 extern const char hex_chars[];
 extern const char hex_chars_upper[];
 
-#endif
-
+#endif /* __ARCOS_HEX_H__ */

@@ -26,5 +26,4 @@ extern const struct ksymbol __ksymbols_table_end[];
 void print_all_ksymbols(void);
 void print_ksymbol(const char *fmt, unsigned long address);
 
-#endif
-
+#endif /* __ARCOS_KSYMBOL_H__ */

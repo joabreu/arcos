@@ -26,5 +26,4 @@ extern const struct machine_desc __machine_desc_table_end[];
 
 const struct machine_desc *machdesc_match(char *cmdline);
 
-#endif
-
+#endif /* __ARCOS_MACH_DESC_H__ */

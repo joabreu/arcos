@@ -19,5 +19,4 @@ typedef struct spinlock {
 #define spin_lock_init(lock) \
 	arch_spin_lock_init(&((lock)->raw_lock))
 
-#endif
-
+#endif /* __ARCOS_SPINLOCK_H__ */

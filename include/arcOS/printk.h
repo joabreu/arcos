@@ -11,5 +11,4 @@
 
 __printf(1, 2) int printk(const char *fmt, ...);
 
-#endif
-
+#endif /* __ARCOS_PRINTK_H__ */

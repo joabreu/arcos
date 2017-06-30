@@ -28,5 +28,4 @@ typedef u32 resource_size_t;
 typedef u32 phys_addr_t;
 #endif
 
-#endif
-
+#endif /* __ARCOS_TYPES_H__ */

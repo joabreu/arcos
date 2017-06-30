@@ -13,5 +13,4 @@ struct mm_info {
 
 extern struct mm_info init_mm;
 
-#endif
-
+#endif /* __ARCOS_MM_H__ */

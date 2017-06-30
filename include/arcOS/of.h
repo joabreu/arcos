@@ -73,5 +73,4 @@ extern const struct ofdevice_id __ofdevice_table_end[];
 
 void of_init(void);
 
-#endif
-
+#endif /* __ARCOS_OF_H__ */

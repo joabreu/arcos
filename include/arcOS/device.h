@@ -8,5 +8,4 @@
 
 void driver_init(void);
 
-#endif
-
+#endif /* __ARCOS_DEVICE_H__ */

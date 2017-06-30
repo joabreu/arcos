@@ -12,5 +12,4 @@
 #define PAGE_ALIGN(addr)	ALIGN(addr, PAGE_SIZE)
 #define PAGE_ALIGNED(addr)	IS_ALIGNED((unsigned long)(addr), PAGE_SIZE)
 
-#endif
-
+#endif /* __ARCOS_PAGE_H__ */

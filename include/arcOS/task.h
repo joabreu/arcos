@@ -52,5 +52,4 @@ static inline bool is_stack(struct task_struct *task, void *addr)
 void task_set_end_magic(struct task_struct *task);
 bool is_task_corrupted(struct task_struct *task);
 
-#endif
-
+#endif /* __ARCOS_TASK_H__ */

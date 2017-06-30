@@ -62,5 +62,4 @@ static inline int isdigit(int c)
 	return '0' <= c && c <= '9';
 }
 
-#endif
-
+#endif /* __ARCOS_CTYPE_H__ */

@@ -8,5 +8,4 @@
 
 #define NR_CPUS		CONFIG_NRCPUS
 
-#endif
-
+#endif /* __ARCOS_CPU_H__ */

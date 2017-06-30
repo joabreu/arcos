@@ -21,5 +21,4 @@ char *strchr(const char *s, int c);
 char *skip_spaces(const char *str);
 size_t strlen(const char *s);
 
-#endif
-
+#endif /* __ARCOS_STRING_H__ */

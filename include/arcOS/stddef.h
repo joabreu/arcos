@@ -26,5 +26,4 @@ enum {
 #define offsetofend(type, member) \
 	(offsetof(type, member) + sizeof(((type *)0)->member))
 
-#endif
-
+#endif /* __ARCOS_STDDEF_H__ */

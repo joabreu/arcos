@@ -17,5 +17,4 @@
 extern struct task_struct init_task;
 extern union task_union init_task_union;
 
-#endif
-
+#endif /* __ARCOS_INIT_TASK_H__ */

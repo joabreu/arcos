@@ -54,5 +54,4 @@ extern const struct earlycon_id __earlycon_table_end[];
 
 void write_earlycon(const unsigned char c);
 
-#endif
-
+#endif /* __ARCOS_SERIAL_H__ */

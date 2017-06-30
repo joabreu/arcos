@@ -17,5 +17,4 @@ void bootmem_mark_reserved_region(unsigned long start_pfn, unsigned long end_pfn
 int init_bootmem(unsigned long map_pfn, unsigned long start_pfn,
 		unsigned long end_pfn);
 
-#endif
-
+#endif /* __ARCOS_BOOTMEM_H__ */

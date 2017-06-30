@@ -111,5 +111,4 @@ static inline int list_empty(const struct list_head *head)
 		&(pos)->member != (head); \
 		(pos) = (tmp), (tmp) = list_prev_entry(tmp, member))
 
-#endif
-
+#endif /* __ARCOS_LIST_H__ */

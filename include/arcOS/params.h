@@ -13,5 +13,4 @@ bool parameq(const char *a, const char *b);
 char *next_arg(char *args, char **param, char **val);
 int parse_args(char *args, int (*fn) (char *param, char *val));
 
-#endif
-
+#endif /* __ARCOS_PARAMS_H__ */

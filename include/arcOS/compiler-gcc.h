@@ -19,5 +19,4 @@
 
 #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
 
-#endif
-
+#endif /* __ARCOS_COMPILER_GCC_H__ */

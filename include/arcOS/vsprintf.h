@@ -15,5 +15,4 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
 int vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
 int scnprintf(char *buf, size_t size, const char *fmt, ...);
 
-#endif
-
+#endif /* __ARCOS_VSPRINTF_H__ */

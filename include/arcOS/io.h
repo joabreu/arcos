@@ -133,5 +133,4 @@ static inline void outl(u32 value, unsigned long addr)
 }
 #endif
 
-#endif
-
+#endif /* __ARCOS_IO_H__ */

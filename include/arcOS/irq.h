@@ -45,5 +45,4 @@ void handle_domain_irq(struct irq_domain *domain, unsigned int hwirq,
 int request_irq(unsigned int irq, int (*handler)(int irq, void *devid),
 		const char *devname, void *devid);
 
-#endif
-
+#endif /* __ARCOS_IRQ_H__ */

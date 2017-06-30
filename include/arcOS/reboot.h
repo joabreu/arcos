@@ -9,5 +9,4 @@
 /* Arch specific */
 extern void machine_halt(void);
 
-#endif
-
+#endif /* __ARCOS_REBOOT_H__ */

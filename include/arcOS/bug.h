@@ -32,4 +32,4 @@ extern struct task_struct init_task;
 	} while(1);
 #define BUILD_BUG_ON_ZERO(e)	(sizeof(struct { int:-!!(e); }))
 
-#endif
+#endif /* __ARCOS_BUG_H__ */

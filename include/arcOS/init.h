@@ -32,5 +32,4 @@ void start_kernel(void);
 /* Arch dependent */
 void setup_arch(char **cmdline);
 
-#endif
-
+#endif /* __ARCOS_INIT_H__ */

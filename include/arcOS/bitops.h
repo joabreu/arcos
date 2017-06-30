@@ -35,5 +35,4 @@ unsigned long find_next_zero_bit(const unsigned long *addr,
 		unsigned long size, unsigned long offset);
 
 #endif /* __ASSEMBLY__ */
-#endif
-
+#endif /* __ARCOS_BITOPS_H__ */
