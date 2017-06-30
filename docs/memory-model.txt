@@ -1,0 +1,22 @@
+Memory Model for arcOS
+======================
+
+1) Memory Layout
+0xffffffff	----------------
+  .
+  .		Untranslated, uncached (kernel only, for I/O)
+  .
+0xC0000000	----------------
+  .
+  .		Untranslated, cached (kernel only)
+  .
+0x80000000	----------------
+  .
+  .		Translated (user/kernel)
+  .
+0x00000000	----------------
+
+2) Info
+If MMU is activated, memory that is translated will generate exception if page
+is not present. Accesses to kernel memory (i.e. to untranslated memory space)
+are not checked.

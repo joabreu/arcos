@@ -12,6 +12,7 @@
 #include <asm/arc-regs.h>
 #include <asm/cache.h>
 #include <asm/irq.h>
+#include <asm/mmu.h>
 #include <asm/setup.h>
 #include <soc/arc/timers.h>
 
@@ -59,7 +60,6 @@ static char *arc_format_cpuinfo(int cpu_id, char *buf, int len)
 			cpu->name, cpu->details,
 			is_isa_arcompact() ? "ARCompact" : "ARCv2",
 			IS_AVAIL1(cpu->isa.be, "[Big-Endian]"));
-
 	return buf;
 }
 
@@ -94,10 +94,8 @@ static void arc_chk_core_config(int cpu_id)
 {
 	struct arc_cpuinfo *cpu = &arc_cpuinfo[cpu_id];
 
-	if (!cpu->extn.timer0)
-		PANIC("timer0 not present!\n");
-	if (!cpu->extn.timer1)
-		PANIC("timer1 not present!\n");
+	PANIC_ON(!cpu->extn.timer0, "timer0 not present!\n");
+	PANIC_ON(!cpu->extn.timer1, "timer1 not present!\n");
 }
 
 static void setup_processor(void)
@@ -122,12 +120,12 @@ void setup_arch(char **cmdline)
 
 	machine_desc = machdesc_match(*cmdline);
 	if (!machine_desc) {
-		PANIC("%s: No machine description found!\n", __func__);
+		PANIC("No machine description found!\n");
 	} else if (machine_desc->setup_early) {
 		machine_desc->setup_early(machine_desc);
 	}
 
 	setup_processor();
 	setup_arch_memory();
+	arc_mmu_init();
 }
-
