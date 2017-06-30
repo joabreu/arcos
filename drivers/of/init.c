@@ -124,8 +124,7 @@ void of_init(void)
 		return; /* Nothing to do here */
 
 	of_info.devs = bootmem_zalloc(dev_count * sizeof(*of_info.devs));
-	if (!of_info.devs)
-		PANIC("Not enough memory to OF devices\n");
+	PANIC_ON(!of_info.devs, "Not enough memory for OF devices\n");
 
 	of_info.devs_count = 0;
 	of_info.devs_max_count = dev_count;
