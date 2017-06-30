@@ -16,6 +16,7 @@ extern struct task_struct init_task;
 
 #define PANIC(args...) \
 	do { \
+		printk("\n --- KERNEL PANIC ---\n"); \
 		printk(args); \
 		show_stacktrace(&init_task); \
 		machine_halt(); \
@@ -32,4 +33,3 @@ extern struct task_struct init_task;
 #define BUILD_BUG_ON_ZERO(e)	(sizeof(struct { int:-!!(e); }))
 
 #endif
-
