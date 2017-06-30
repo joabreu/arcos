@@ -27,5 +27,4 @@ struct arc_bcr_timer {
 #endif
 };
 
-#endif
-
+#endif /* __SOC_ARC_TIMERS_H__ */
