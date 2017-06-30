@@ -10,5 +10,4 @@
 
 void setup_arch_memory(void);
 
-#endif
-
+#endif /* __ARC_SETUP_H__ */

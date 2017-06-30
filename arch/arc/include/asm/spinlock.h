@@ -44,5 +44,4 @@ static inline void arch_spin_lock_init(struct arch_spinlock *lock)
 	lock->lock_status = ARCH_SPINLOCK_UNLOCKED;
 }
 
-#endif
-
+#endif /* __ARC_SPINLOCK_H__ */

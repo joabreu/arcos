@@ -39,5 +39,4 @@ static inline int arc_unwind(struct unwind_info *info)
 }
 #endif
 
-#endif
-
+#endif /* __ARC_UNWIND_H__ */

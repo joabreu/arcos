@@ -74,5 +74,4 @@ static inline void arch_local_irq_disable(void)
 		: "memory");
 }
 
-#endif
-
+#endif /* __ARC_IRQ_COMPACT_H__ */

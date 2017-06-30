@@ -11,5 +11,4 @@
 #define TASK_STACK_SIZE		PAGE_SIZE
 #define init_stack		(init_task_union.stack)
 
-#endif
-
+#endif /* __ARC_TASK_INFO_H__ */

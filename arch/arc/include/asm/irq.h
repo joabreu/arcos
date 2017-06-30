@@ -21,5 +21,4 @@ void arc_do_irq(unsigned int hwirq, struct pt_regs *regs);
 void arc_panic_irq(unsigned int hwirq, struct pt_regs *regs);
 void arc_init_irq(void);
 
-#endif
-
+#endif /* __ARC_IRQ_H__ */

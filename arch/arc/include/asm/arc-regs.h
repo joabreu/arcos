@@ -3,8 +3,8 @@
  * Copyright (C) 2017 Jose Abreu <joabreu@synopsys.com>
  */
 
-#ifndef __ARC_REGS__
-#define __ARC_REGS__
+#ifndef __ARC_ARC_REGS_H__
+#define __ARC_ARC_REGS_H__
 
 #include <arcOS/bitops.h>
 
@@ -114,5 +114,4 @@ static inline bool is_isa_arcompact(void)
 }
 
 #endif /* __ASSEMBLY__ */
-#endif
-
+#endif /* __ARC_ARC_REGS_H__ */

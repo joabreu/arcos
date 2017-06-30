@@ -10,5 +10,4 @@ struct task_struct *task;
 
 void show_stacktrace(struct task_struct *task);
 
-#endif
-
+#endif /* __ARC_STACKTRACE_H__ */

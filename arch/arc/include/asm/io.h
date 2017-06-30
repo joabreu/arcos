@@ -11,5 +11,4 @@
 #define ioremap ioremap
 void *ioremap(phys_addr_t paddr, size_t size);
 
-#endif
-
+#endif /* __ARC_IO_H__ */

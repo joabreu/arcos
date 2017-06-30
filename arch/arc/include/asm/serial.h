@@ -14,5 +14,4 @@
 #define BASE_BAUD	33333333
 #endif
 
-#endif
-
+#endif /* __ARC_SERIAL_H__ */
