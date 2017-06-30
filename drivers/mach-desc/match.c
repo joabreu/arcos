@@ -38,4 +38,3 @@ const struct machine_desc *machdesc_match(char *cmdline)
 
 	return NULL;
 }
-

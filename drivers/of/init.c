@@ -134,4 +134,3 @@ void of_init(void)
 	for_each_ofdevice(i, dev, &of_info)
 		of_start_dev(&of_info, dev);
 }
-

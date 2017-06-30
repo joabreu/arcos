@@ -18,4 +18,3 @@ static int uart_8250_setup(struct earlycon_device *dev, const char *options)
 	return 0;
 }
 EARLYCON_DECLARE(uart_8250, uart_8250_setup);
-

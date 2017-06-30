@@ -10,4 +10,3 @@ void driver_init(void)
 {
 	of_init();
 }
-

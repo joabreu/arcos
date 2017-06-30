@@ -163,4 +163,3 @@ void write_earlycon(const unsigned char c)
 		return;
 	early_console.port.putchar(&early_console, c);
 }
-

@@ -36,4 +36,3 @@ static int uart_arc_setup(struct earlycon_device *edev, const char *options)
 	return 0;
 }
 EARLYCON_DECLARE(uart_arc, uart_arc_setup);
-

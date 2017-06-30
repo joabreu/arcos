@@ -16,4 +16,3 @@ static int null_driver_setup(const struct ofnode *node)
 	return 0;
 }
 OFDEVICE_DEFINE(null_driver, "snps,null-driver", null_driver_setup);
-
