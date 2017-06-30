@@ -63,4 +63,3 @@ int main(int argc, char **argv)
 	write_footer(fout);
 	return 0;
 }
-
